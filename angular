@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS with Node.js</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MyController">
+    <h1>AngularJS and Node.js Example</h1>
+    <input type="text" ng-model="userInput" placeholder="Enter some data">
+    <button ng-click="sendData()">Send Data</button>
+    <p>{{ responseMessage }}</p>
+
+    <script>
+        angular.module('myApp', [])
+            .controller('MyController', function($scope, $http) {
+                $scope.sendData = function() {
+                    const dataToSend = { input: $scope.userInput };
+                    $http.post('http://localhost:3000/api/data', dataToSend)
+                        .then(function(response) {
+                            $scope.responseMessage = response.data.message;
+                        })
+                        .catch(function(error) {
+                            console.error('Error:', error);
+                        });
+                };
+            });
+    </script>
+</body>
+</html>
