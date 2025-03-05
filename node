@@ -1,0 +1,31 @@
+mkdir my-node-backend
+cd my-node-backend
+npm init -y
+
+npm install express cors body-parser
+
+// server.js
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// Sample route
+app.post('/api/data', (req, res) => {
+    const inputData = req.body;
+    // Process the inputData and generate a response
+    const responseData = { message: 'Data received', input: inputData };
+    res.json(responseData);
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+node server.js
